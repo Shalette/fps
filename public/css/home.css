@@ -1,0 +1,10 @@
+
+.row a:hover{
+  text-decoration: none;
+}
+.card:hover{
+  border-color: black;
+}
+.card{
+  margin-bottom : 2em;
+}
