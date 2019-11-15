@@ -7,7 +7,12 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
     @if(session('success'))
-        <h4 class="text-success text-center">{{session('success')}}</h4>
+        <div id="notice" class="card text-white bg-success">
+            <div class="card-body d-flex justify-content-between">
+                <h4>{{session('success')}}</h4>
+                <button id="close" class="btn btn-light text-danger"><b>&times;</b></button>
+            </div>
+        </div>
     @endif
         <div class="card">
             <h4 class="card-header text-center">{{ __('Edit Profile Details') }}</h4>
@@ -74,7 +79,7 @@
                         <div class="col-md-6">
                                 <input type="file" class="form-control @error('file') is-invalid @enderror" 
                                         name="file" id="file">
-                                <label class="custom-file-label" for="file" id="file_label">(Max Size: 2MB)</label>
+                                <label class="custom-file-label" for="file" id="file_label">Upload Image (Max Size: 2MB)</label>
                                 @error('file')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -97,10 +102,5 @@
 </div>   
 @endsection
 @section('js')
-<script>
-$('#file').on("change",function() {
-      var file = $('#file')[0].files[0].name;
-      $('#file_label').html(file);
-    });
-</script>
+<script src="{{ asset('js/common.js') }}"></script>
 @endsection

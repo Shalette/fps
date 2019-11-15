@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+  }
+#page-content {
+  flex: 1 0 auto;
+  padding-bottom: 2em;
+}
+#sticky-footer {
+  flex-shrink: none;
+}
+.avatar {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 10px;
+}

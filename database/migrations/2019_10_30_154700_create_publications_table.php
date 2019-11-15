@@ -17,8 +17,6 @@ class CreatePublicationsTable extends Migration
             $table->bigIncrements('pub_id');
             $table->bigInteger('id')->unsigned()->index();
             $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('dept_id')->unsigned()->index();
-            $table->foreign('dept_id')->references('dept_id')->on('departments')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
             $table->string('pdf_link');

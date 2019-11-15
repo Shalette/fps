@@ -28,20 +28,18 @@ class Update extends Controller
                         ->withInput();
         }
         else{
-            if (Auth::check()){
-                    $publish = new Publication();
-                    $user = Auth::user();
-                    DB::table('users')->increment('pub_number', 1, ['id' => $user->id]);
-                    $publish -> id = $user->id;
-                    $publish -> dept_id = $user->dept_id;
-                    $publish -> title = $request->name;
-                    $publish -> description = $request->description;
-                    $publish -> pdf_link = basename(Storage::putFile('public/publications', $request->file('file')));
-                    $publish -> save();
+                $publish = new Publication();
+                $user = Auth::user();
+                DB::table('users')->increment('pub_number', 1, ['id' => $user->id]);
+                $publish -> id = $user->id;
+                $publish -> title = $request->title;
+                $publish -> description = $request->description;
+                $publish -> pdf_link = basename(Storage::putFile('public/publications', $request->file('file')));
+                $publish -> save();
 
-                    return redirect()->back()
-                    ->withSuccess("File Uploaded Successfully!");
-                }
+                return redirect()->back()
+                ->withSuccess("File Uploaded Successfully!");
+                
             }
     }
 
@@ -60,18 +58,17 @@ class Update extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                        ->withErrors($validator)
-                        ->withInput();
+            ->withErrors($validator)
+            ->withInput();
         }
         else{
-            if (Auth::check()){
-                $user = Auth::user();
-                DB::table('users')
-                ->where('id', $user->id)
-                ->update(['password'=> Hash::make($request->new_password)]);
-                return redirect()->back()
-                ->withSuccess("Password Changed Successfully!");
-            }
+            $user = Auth::user();
+            DB::table('users')
+            ->where('id', $user->id)
+            ->update(['password'=> Hash::make($request->new_password)]);
+            
+            return redirect()->back()
+            ->withSuccess("Password Changed Successfully!");
         }
     }
 
@@ -84,42 +81,84 @@ class Update extends Controller
             'file' => 'nullable|max:2048|mimes:jpeg,jpg,png'
         ]);
         if ($validator->fails()) {
+            print($request->all());
+        }
+        else{
+            $user = Auth::user();
+            DB::table('users')
+            ->where('id', $user->id)
+            ->update([
+                'name' => $request->name,
+                'position' => $request->position,
+                'degree' => $request->degree,
+                'dept_id' => $request->dept_id,
+                ]);
+            if ($request->hasFile('file')){
+                $image = DB::table('users')->where('id', $user->id)->first()->profile_image;
+                if($image=="account.png"){     
+                    DB::table('users')
+                    ->where('id', $user->id)
+                    ->update([
+                        'profile_image' => basename(Storage::putFile('public/images', $request->file('file')))
+                    ]);
+                }
+                else{
+                    Storage::delete('public/images/'.$image);
+                    DB::table('users')
+                    ->where('id', $user->id)
+                    ->update([
+                        'profile_image' => basename(Storage::putFile('public/images', $request->file('file')))
+                    ]);
+                }
+            }
+            return redirect()->back()
+            ->withSuccess("Profile Updated Successfully!");
+        }
+    }
+
+    public function newedit(Request $request){
+        $validator = Validator::make($request->all(), [
+            'pub_id' => 'required',
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+        if ($validator->fails()) {
             return redirect()->back()
                         ->withErrors($validator)
                         ->withInput();
         }
         else{
-            if (Auth::check()){
-                $user = Auth::user();
-                DB::table('users')
-                ->where('id', $user->id)
+            if(Auth::user()->id == DB::table('publications')
+            ->where('pub_id', $request->pub_id)->value('id')){
+                DB::table('publications')
+                ->where('pub_id', $request->pub_id)
                 ->update([
-                    'name' => $request->name,
-                    'position' => $request->position,
-                    'degree' => $request->degree,
-                    'dept_id' => $request->dept_id,
-                    ]);
-                if ($request->hasFile('file')){
-                    $image = DB::table('users')->where('id', Auth::user()->id)->first()->profile_image;
-                    if($image=="account.png"){     
-                        DB::table('users')
-                        ->where('id', $user->id)
-                        ->update([
-                            'profile_image' => basename(Storage::putFile('public/images', $request->file('file')))
-                        ]);
-                    }
-                    else{
-                        Storage::delete('public/images/'.$image);
-                        DB::table('users')
-                        ->where('id', $user->id)
-                        ->update([
-                            'profile_image' => basename(Storage::putFile('public/images', $request->file('file')))
-                        ]);
-                    }
-                }
+                    'title' => $request->title,
+                    'description' => $request->description
+                ]);
+                
                 return redirect()->back()
-                ->withSuccess("Profile Updated Successfully!");
+                ->withSuccess("Details Updated Successfully!");   
+            }
+            else{
+                return redirect()->back()
+                ->withFailure("Update Operation Failed.");
             }
         }
+    }
+
+    public function delete(Request $request){
+        if(Auth::user()->id == DB::table('publications')
+        ->where('pub_id', $request->pub_id)->value('id')){
+            DB::table('publications')
+            ->where('pub_id', $request->pub_id)
+            ->delete();
+
+            return redirect()->route('home');
+        }
+        else{
+            return redirect()->back()
+            ->withFailure("Delete Operation Failed.");
+       }
     }
 }

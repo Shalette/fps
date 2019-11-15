@@ -8,25 +8,8 @@
       <link href=@yield('css') rel="stylesheet">      
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-      <style>
-        html, body {
-            height: 100%;
-          }
-        #page-content {
-          flex: 1 0 auto;
-          padding-bottom: 2em;
-        }
-        #sticky-footer {
-          flex-shrink: none;
-        }
-        .avatar {
-          vertical-align: middle;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          margin: 10px;
-        }
-      </style>
+      <link href="{{ asset('css/layout.css')}}" rel="stylesheet">
+
     </head>
     <body class="d-flex flex-column">
       <div id="page-content">
@@ -39,7 +22,7 @@
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
           @if (Auth::check())
             <li class="nav-item">
-              <a class="nav-link" href="home">Home</a>
+              <a class="nav-link" href="{{ route('home') }}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('publish') }}">Add Publication</a>

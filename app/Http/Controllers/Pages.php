@@ -56,4 +56,13 @@ class Pages extends Controller
     public function publish(){
       return view('publish');
     }
+
+    public function edit(Request $request){
+      $pub_id  = $request->pub_id;
+      $publication = DB::table('publications')
+      ->where('pub_id', $pub_id)
+      ->where('id', Auth::user()->id)
+      ->first();
+      return view('edit')->withPublication($publication);
+    }
 }
