@@ -5,38 +5,59 @@
 @section('title', 'FPS - Faculty Information')
 @section('content')
 <div class="row">
-    <div class="col-md-4">
-        <div class="no-hover card">
-            <img class="card-img-top img-thumbnail" src="{{asset('storage/images/'.$user->profile_image) }}" alt="Profile Image">
-            <div class="card-body">
+    <br>
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-image">
+            <img src="{{asset('storage/images/'.$user->profile_image) }}" alt="Profile Image">
+            </div>
+            <div class="card-content">
                 <h5 class="card-title">{{ $user->name }}</h5>
-                <h6 class="card-text">{{ $user->degree }}</h6>
-                <h6 class="card-text">{{ $user->position }}</h6>
-                <h6 class="card-text">Contact: <a href="mailto:{{ $user->email }}" target="_blank">{{ $user->email }}</a></h6>
-                <p class="card-text text-muted">Number of publications: {{ $user->pub_number }}</small></p>
+                <h6>{{ $user->degree }}</h6><h6>{{ $user->position }}</h6>
+                <p class="grey-text text-darken-2">Number of publications: {{ $user->pub_number }}</p>
+            </div>
+            <div class="card-action">
+            <a href="mailto:{{ $user->email }}" target="_blank">Contact</a>
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+
+    <div class="col s12 m8">
     @if(!$publications->isEmpty())
-        <h2>All Papers </h2>
+        <div class="row">
+            <h4 class="grey-text text-darken-3 col s12 m6">All Papers </h4>
+            <!-- <form class="col s12 m6">
+            <div class="input-field"> 
+                <select>
+                <option value="" hidden disabled selected>Sort</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+                </select>
+            </div>
+            </form> -->
+        </div>
+    
         @foreach ($publications as $pub)
         <a target="_blank" href="{{ asset('storage/publications/'.$pub->pdf_link )}}">
-            <div class="pub card">
-                <div class="card-header">
-                    <h5>{{ $pub->title }}</h5>
-                </div>
-                <div class="card-body">
-                    {{ $pub->description }}
+            <div class="card-panel hoverable grey lighten-5 z-depth-1">
+                <h5 class="cyan-text text-darken-3 card-title">{{ $pub->title }}</h5>
+                <div class="card-content">
+                    <h6 class="cyan-text text-darken-2">{{ $pub->description }}</h6>
                 </div>
             </div>
         </a>
         @endforeach
     @else
-        <div class="jumbotron text-center">
-            <h4>This faculty member hasn't published any papers yet.</h4>
+        <div class="card center-align">
+            <div class="card-content">
+                <h4>This faculty member hasn't published any papers yet.</h4>
+            </div>
         </div>  
     @endif
     </div>
 </div>
+@endsection
+@section('js')
+<script src="{{ asset('js/form.js') }}"></script>
 @endsection

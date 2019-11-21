@@ -1,15 +1,12 @@
-.card{
+.card-panel{
   margin-top: 2rem;
   overflow-wrap: break-word;
 }
-.row a:hover{
-  text-decoration: none;
-}
-.card:hover{
-  border-color: black;
-}
-
 .thumb{
   height: 100px;
   margin-bottom: 10px;
+}
+.profile{
+  width: 80px;
+  height: 80px;
 }

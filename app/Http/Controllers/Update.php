@@ -17,7 +17,7 @@ class Update extends Controller
 {
     public function upload(Request $request){
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
             'description' => 'required',
             'file' => 'required|max:2048|mimes:pdf'
         ]);
@@ -25,7 +25,8 @@ class Update extends Controller
         if ($validator->fails()) {
             return redirect()->back()
                         ->withErrors($validator)
-                        ->withInput();
+                        ->withInput()
+                        ->withFailure("Upload failed.");
         }
         else{
                 $publish = new Publication();
@@ -59,7 +60,8 @@ class Update extends Controller
         if ($validator->fails()) {
             return redirect()->back()
             ->withErrors($validator)
-            ->withInput();
+            ->withInput()
+            ->withFailure("Update failed.");
         }
         else{
             $user = Auth::user();
@@ -68,7 +70,7 @@ class Update extends Controller
             ->update(['password'=> Hash::make($request->new_password)]);
             
             return redirect()->back()
-            ->withSuccess("Password Changed Successfully!");
+            ->withSuccess("Password changed successfully!");
         }
     }
 
@@ -81,7 +83,10 @@ class Update extends Controller
             'file' => 'nullable|max:2048|mimes:jpeg,jpg,png'
         ]);
         if ($validator->fails()) {
-            print($request->all());
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput()
+            ->withFailure("Update failed.");
         }
         else{
             $user = Auth::user();
@@ -112,7 +117,7 @@ class Update extends Controller
                 }
             }
             return redirect()->back()
-            ->withSuccess("Profile Updated Successfully!");
+            ->withSuccess("Profile updated successfully!");
         }
     }
 
@@ -125,7 +130,8 @@ class Update extends Controller
         if ($validator->fails()) {
             return redirect()->back()
                         ->withErrors($validator)
-                        ->withInput();
+                        ->withInput()
+                        ->withFailure('Update failed');
         }
         else{
             if(Auth::user()->id == DB::table('publications')
@@ -138,11 +144,11 @@ class Update extends Controller
                 ]);
                 
                 return redirect()->back()
-                ->withSuccess("Details Updated Successfully!");   
+                ->withSuccess("Details updated successfully!");   
             }
             else{
                 return redirect()->back()
-                ->withFailure("Update Operation Failed.");
+                ->withFailure("Update failed.");
             }
         }
     }
@@ -153,12 +159,12 @@ class Update extends Controller
             DB::table('publications')
             ->where('pub_id', $request->pub_id)
             ->delete();
-
+        DB::table('users')->decrement('pub_number', 1, ['id' => Auth::user()->id]);
             return redirect()->route('home');
         }
         else{
             return redirect()->back()
-            ->withFailure("Delete Operation Failed.");
+            ->withFailure("Delete operation failed.");
        }
     }
 }
