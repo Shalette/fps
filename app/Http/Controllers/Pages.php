@@ -14,12 +14,48 @@ use App\User;
 
 class Pages extends Controller
 {
+  
     public function main(){
       $users = DB::table('users')
       ->join('departments', 'users.dept_id', '=', 'departments.dept_id')
+      ->orderBy('dept_name')
+      ->orderBy('name')
       ->get();
 
-     return view('main')->withUsers($users);
+      $departments = DB::table('departments')->orderBy('dept_name')
+      ->get();
+
+     return view('main')->withUsers($users)->withDepartments($departments);
+    }
+
+    public function mainfilter(Request $request){
+      $order = $request->order;
+      $dept = $request->department;
+      $keywords = $request->keywords;
+      $users = DB::table('users')
+      ->join('departments', 'users.dept_id', '=', 'departments.dept_id')
+      ->orderBy('name', $order);
+
+      if($dept!=0)
+        $users = $users->where('users.dept_id', $dept);
+
+      if($keywords!=""){
+        $keywords = array_map('trim', explode(',',request('keywords')));
+        $users = $users->where(function ($q) use ($keywords) {
+            foreach ($keywords as $keyword) {
+              $q->orWhere('name', 'like', "%".$keyword."%")
+                ->orWhere('dept_name', 'like', "%".$keyword."%")
+                ->orWhere('degree', 'like', "%".$keyword."%")
+                ->orWhere('position', 'like', "%".$keyword."%");
+            }
+          }); 
+      }   
+      $users = $users->get();
+
+      $departments = DB::table('departments')->orderBy('dept_name')
+      ->get();
+
+     return view('main')->withUsers($users)->withDepartments($departments)->withRequest($request);
     }
 
     public function account() {
@@ -28,7 +64,7 @@ class Pages extends Controller
       ->where('id', Auth::user()->id)
       ->first();
 
-      $departments = DB::table('departments')
+      $departments = DB::table('departments')->orderBy('dept_name')
       ->get();
       
      return view('account')->withUser($user)->withDepartments($departments);
@@ -49,6 +85,7 @@ class Pages extends Controller
       $publications = DB::table('users')
       ->join('publications', 'users.id', '=', 'publications.id') 
       ->where('users.id', $id)
+      ->orderBy('publications.created_at', 'desc')
       ->get();
       return view('faculty')->withUser($user)->withPublications($publications);
     }

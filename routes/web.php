@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'Pages@main')->name('main');
+Route::post('/', 'Pages@mainfilter')->name('mainfilter');
 
 Route::get('/account', 'Pages@account')->name('account')->middleware('auth');
 Route::post('/account', 'Update@newprofile')->name('newprofile')->middleware('auth');
@@ -32,6 +33,11 @@ Route::post('/edit', 'Update@newedit')->name('newedit')->middleware('auth');
 
 Route::get('/faculty/{id}', [
   'uses' => 'Pages@faculty' ,
+  'as' => 'faculty' ,
+])->where('id', '[1-9][0-9]*');
+
+Route::post('/faculty/{id}', [
+  'uses' => 'Pages@facultyfilter' ,
   'as' => 'faculty' ,
 ])->where('id', '[1-9][0-9]*');
 

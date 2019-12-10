@@ -2,3 +2,6 @@
   margin-bottom : 2em;
 }
 
+[data-href] {
+  cursor: pointer;
+}

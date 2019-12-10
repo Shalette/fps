@@ -25,30 +25,23 @@
 
     <div class="col s12 m8">
     @if(!$publications->isEmpty())
-        <div class="row">
-            <h4 class="grey-text text-darken-3 col s12 m6">All Papers </h4>
-            <!-- <form class="col s12 m6">
-            <div class="input-field"> 
-                <select>
-                <option value="" hidden disabled selected>Sort</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                </select>
-            </div>
-            </form> -->
-        </div>
-    
+    <h4 class="grey-text text-darken-3 col s12 m6">All Papers </h4>
+    <table class="highlight">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
         @foreach ($publications as $pub)
-        <a target="_blank" href="{{ asset('storage/publications/'.$pub->pdf_link )}}">
-            <div class="card-panel hoverable grey lighten-5 z-depth-1">
-                <h5 class="cyan-text text-darken-3 card-title">{{ $pub->title }}</h5>
-                <div class="card-content">
-                    <h6 class="cyan-text text-darken-2">{{ $pub->description }}</h6>
-                </div>
-            </div>
-        </a>
+        <tr data-href="{{ asset('storage/publications/'.$pub->pdf_link )}}">
+            <td><p class="card-title cyan-text text-darken-4">{{ $pub->title }}</p></td>
+            <td><p class="cyan-text text-darken-2">{{ $pub->description }}</p></td>
+        </tr>
         @endforeach
+        </tbody>
+    </table>    
     @else
         <div class="card center-align">
             <div class="card-content">
@@ -61,5 +54,5 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('js/form.js') }}"></script>
+<script src="{{ asset('js/faculty.js') }}"></script>
 @endsection
