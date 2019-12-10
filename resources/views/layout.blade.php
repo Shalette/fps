@@ -16,45 +16,6 @@
     <body >
     <!-- class="d-flex flex-column" -->
       <main id="page-content">
-        <!-- <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="{{ route('main') }}">Faculty Publication System</a>
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          @if (Auth::check())
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('home') }}">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('publish') }}">Add Publication</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('account') }}">Account</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('change') }}">Change Password</a>
-            </li> 
-          @else
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">Faculty Login</a>
-            </li>
-          @endif
-          </ul>
-
-          @if (Auth::check())
-              <button class="btn btn-outline-light my-2 my-sm-0" href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-              </form>              
-          @endif    
-
-          
-        </div>
-        </nav> -->
-
         <nav>
         <div class="nav-wrapper cyan darken-3">
           <a id="brand" class="brand-logo"  href="{{ route('main') }}">FPS</a>
