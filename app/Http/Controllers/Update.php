@@ -31,8 +31,7 @@ class Update extends Controller
         else{
                 $publish = new Publication();
                 $user = Auth::user();
-                print($user);
-                DB::table('users')->where('id', $user->id)->increment('pub_number');
+                DB::table('users')->where('id', $user->id)->increment('pub_number');    
                 $publish -> id = $user->id;
                 $publish -> title = $request->title;
                 $publish -> description = $request->description;
@@ -155,12 +154,14 @@ class Update extends Controller
     }
 
     public function delete(Request $request){
-        if(Auth::user()->id == DB::table('publications')
+        $user=Auth::user();
+        if($user->id == DB::table('publications')
         ->where('pub_id', $request->pub_id)->value('id')){
             DB::table('publications')
             ->where('pub_id', $request->pub_id)
             ->delete();
-        DB::table('users')->where('id', Auth::user()->id )->decrement('pub_number');
+
+        DB::table('users')->where('id', $user->id )->decrement('pub_number');
             return redirect()->route('home');
         }
         else{
