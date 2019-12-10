@@ -1,8 +1,9 @@
 @extends('layout')
 @section('title', 'FPS - Edit Publication')
 @section('css')
-{{ asset("css/edit.css") }}
+<link href="{{ asset('css/edit.css') }}" rel="stylesheet">
 @endsection
+
 @section('content')
 <div class="row">
 <div class="col s12">
@@ -78,7 +79,6 @@
         </div>
     </div>
     <br>
-        <!-- href="{{route('delete', $publication->pub_id)}}" -->
     <button id="delete" class="btn col s4 offset-s4 red darken-3 waves-effect waves-light"><i class="material-icons left">delete</i>Delete this publication.</button>
     @else   
     <div class="card-panel center-align">
@@ -88,6 +88,7 @@
     @endif  
 </div>
 @endsection
+
 @section('js')
 <script src="{{ asset('js/form.js') }}"></script>
 <script src="{{ asset('js/common.js') }}"></script>

@@ -1,8 +1,9 @@
 @extends('layout')
 @section('css')
-{{ asset("css/faculty.css") }}
+<link href="{{ asset('css/faculty.css') }}" rel="stylesheet">
 @endsection
 @section('title', 'FPS - Faculty Information')
+
 @section('content')
 <div class="row">
     <br>
@@ -58,6 +59,7 @@
     </div>
 </div>
 @endsection
+
 @section('js')
 <script src="{{ asset('js/form.js') }}"></script>
 @endsection

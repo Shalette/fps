@@ -1,8 +1,9 @@
 @extends('layout')
 @section('css')
-{{ asset("css/account.css") }}
+<link href="{{ asset('css/account.css') }}" rel="stylesheet">
 @endsection
 @section('title', 'FPS - Account')
+
 @section('content')
 <div class="row">
     <div class="col s12">
@@ -97,6 +98,7 @@
     </div>
 </div>   
 @endsection
+
 @section('js')
 <script src="{{ asset('js/common.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>

@@ -1,8 +1,9 @@
 @extends('layout')
 @section('css')
-{{ asset("css/home.css") }}
+<link href="{{ asset('css/home.css') }}" rel="stylesheet">
 @endsection
 @section('title', 'FPS - Home')
+
 @section('content')
 <div class="row justify-content-center">
     <br>

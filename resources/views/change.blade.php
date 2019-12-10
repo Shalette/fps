@@ -1,5 +1,6 @@
 @extends('layout')
 @section('title', 'FPS - Change Password')
+
 @section('content')
 <div class="row">
     <div class="col s12">
@@ -61,14 +62,14 @@
                             Update Password
                         </button>
                     </div>
-                </div>
-                
+                </div>       
             </form>
         </div>
     </div>
 </div>
 </div>
 @endsection
+
 @section('js')
 <script src="{{ asset('js/common.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>

@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'FPS - Home')
 @section('css')
-{{ asset("css/main.css") }}
+<link href="{{ asset('css/main.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
         <div class="card-panel hoverable grey lighten-5 z-depth-1">
           <div class="row valign-wrapper">
             <div class="col s6 m3">
-              <img src="{{asset('storage/images/'.$user->profile_image) }}" alt="Profile Image" class="circle profile"> <!-- notice the "circle" class -->
+              <img src="{{asset('storage/images/'.$user->profile_image) }}" alt="Profile Image" class="circle profile">
             </div>
             <div class="col s6 m9">
               <div class="card-content">
