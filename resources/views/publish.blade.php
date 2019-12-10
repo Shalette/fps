@@ -43,8 +43,7 @@
                 <div class="input-field col s12 inline">
                     <label for="description">{{ __('Description') }}</label>
                     <textarea id="description" type="text" class="materialize-textarea @error('description') invalid @enderror" name="description"
-                    required autocomplete="description">{{old('description')}}
-                    </textarea>
+                    required autocomplete="description">{{old('description')}}</textarea>
                     @error('description')
                     <span class="helper-text red-text text-darken-3" data-error="{{ $message }}"></span>
                     @enderror
