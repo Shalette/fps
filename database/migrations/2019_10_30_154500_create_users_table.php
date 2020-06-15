@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('dept_id')->unsigned()->index();
             $table->foreign('dept_id')->references('dept_id')->on('departments')->onDelete('cascade');
             $table->integer('pub_number')->default('0');
+            $table->integer('years_exp')->default('0');
             $table->string('profile_image')->nullable()->default('account.png');
             $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();

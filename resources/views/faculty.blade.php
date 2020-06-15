@@ -15,6 +15,7 @@
             <div class="card-content">
                 <h5 class="card-title">{{ $user->name }}</h5>
                 <h6>{{ $user->degree }}</h6><h6>{{ $user->position }}</h6>
+                <h6>Years Of Experience: {{ $user->years_exp }}</h6>
                 <p class="grey-text text-darken-2">Number of publications: {{ $user->pub_number }}</p>
             </div>
             <div class="card-action">
